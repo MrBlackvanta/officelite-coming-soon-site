@@ -13,11 +13,12 @@ export function Logo({ className }: LogoProps) {
       aria-label="officelite"
       className={className}
     >
-      <circle cx="15" cy="15" r="15" fill="#5175FF" />
-      <circle cx="30" cy="15" r="15" fill="#5175FF" />
+      <circle cx="15" cy="15" r="15" fill="var(--color-brand)" />
+      <circle cx="30" cy="15" r="15" fill="var(--color-brand)" />
       <path
         d="M22.5 2.01a15 15 0 0 1 0 25.98 15 15 0 0 1 0-25.98Z"
-        fill="#718FFF"
+        fill="#B4C4FF"
+        fillOpacity={0.32}
       />
       <path
         fill="currentColor"

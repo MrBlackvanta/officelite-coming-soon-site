@@ -51,6 +51,41 @@
   --shadow-panel: 0 50px 50px -25px #4b5c9abf;
 }
 
+@property --v-dollars {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
+@property --v-cents {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
+@keyframes v-count {
+  from {
+    --v-dollars: 0;
+    --v-cents: 0;
+  }
+}
+
+@utility v-count {
+  counter-reset: v-dollars var(--v-dollars) v-cents var(--v-cents);
+
+  &::after {
+    content: "$" counter(v-dollars) "." counter(v-cents, decimal-leading-zero);
+  }
+
+  @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+    animation: v-count 1.2s ease-out both paused;
+  }
+}
+
+@utility v-count-run {
+  animation-play-state: running;
+}
+
 @utility v-shell {
   @apply mx-auto w-full px-6 md:px-9.75 lg:max-w-297.5 lg:px-10;
 }

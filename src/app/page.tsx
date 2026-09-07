@@ -1,6 +1,6 @@
 import { SiteHeader } from "@/components/layout";
 import { HeaderRings } from "@/components/ui";
-import { Hero } from "@/views/home";
+import { Hero, LaunchFooter, Pricing } from "@/views/home";
 
 export default function HomePage() {
   return (
@@ -9,7 +9,9 @@ export default function HomePage() {
       <SiteHeader />
       <main>
         <Hero />
+        <Pricing />
       </main>
+      <LaunchFooter />
     </div>
   );
 }
