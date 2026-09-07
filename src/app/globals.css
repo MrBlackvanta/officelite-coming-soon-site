@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @source not "../../*.md";
 @source not "../../frontend-mentor-files";
-@source not "../assets";
+@source not "../../public";
 
 @theme {
   --font-sans: var(--font-kumbh-sans), ui-sans-serif, system-ui, sans-serif;
@@ -37,20 +37,26 @@
   --text-lead-sm--line-height: 1.625rem;
   --text-body: 1rem;
   --text-body--line-height: 1.75rem;
-  --text-tile: 3.5rem;
-  --text-tile--line-height: 3rem;
-  --text-tile-sm: 2rem;
-  --text-tile-sm--line-height: 3rem;
-  --text-tile-label: 0.75rem;
-  --text-tile-label--line-height: 1.75rem;
+  --text-count: 3.5rem;
+  --text-count--line-height: 3rem;
+  --text-count-sm: 2rem;
+  --text-count-sm--line-height: 3rem;
+  --text-count-label: 0.75rem;
+  --text-count-label--line-height: 1.75rem;
 
   --radius-card: 0.8125rem;
 
   --shadow-card: 0 50px 50px -25px #4b5c9a3f;
   --shadow-cta: 0 25px 25px -10px #3f5bc23f;
   --shadow-panel: 0 50px 50px -25px #4b5c9abf;
+}
 
-  --container-shell: 69.375rem;
+@utility v-shell {
+  @apply mx-auto w-full px-6 md:px-9.75 lg:max-w-297.5 lg:px-10;
+}
+
+@utility v-focus-ring {
+  @apply focus-visible:outline-2 focus-visible:outline-offset-4;
 }
 
 @layer base {
