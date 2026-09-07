@@ -1,8 +1,56 @@
 @import "tailwindcss";
 @source not "../../*.md";
+@source not "../../frontend-mentor-files";
+@source not "../assets";
 
 @theme {
   --font-sans: var(--font-kumbh-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --color-page: #fafafa;
+  --color-surface: #ffffff;
+  --color-night: #25293a;
+  --color-ink: #333950;
+  --color-muted: #6a718a;
+  --color-hairline: #898fa5;
+  --color-danger: #e01515;
+
+  --color-brand: #4168ff;
+  --color-brand-ink: #2450ff;
+  --color-brand-deep: #0f3fff;
+  --color-ghost: #e2e8ff;
+  --color-ghost-hover: #d0d9ff;
+  --color-tile: #ecf0ff;
+
+  --text-display: 3.5rem;
+  --text-display--line-height: 4rem;
+  --text-h1: 2.5rem;
+  --text-h1--line-height: 3rem;
+  --text-h2: 1.25rem;
+  --text-h2--line-height: 1.75rem;
+  --text-eyebrow: 1rem;
+  --text-eyebrow--line-height: 3rem;
+  --text-eyebrow--letter-spacing: 0.3125em;
+  --text-eyebrow--font-weight: 700;
+  --text-lead: 1.125rem;
+  --text-lead--line-height: 1.75rem;
+  --text-lead-sm: 1rem;
+  --text-lead-sm--line-height: 1.625rem;
+  --text-body: 1rem;
+  --text-body--line-height: 1.75rem;
+  --text-tile: 3.5rem;
+  --text-tile--line-height: 3rem;
+  --text-tile-sm: 2rem;
+  --text-tile-sm--line-height: 3rem;
+  --text-tile-label: 0.75rem;
+  --text-tile-label--line-height: 1.75rem;
+
+  --radius-card: 0.8125rem;
+
+  --shadow-card: 0 50px 50px -25px #4b5c9a3f;
+  --shadow-cta: 0 25px 25px -10px #3f5bc23f;
+  --shadow-panel: 0 50px 50px -25px #4b5c9abf;
+
+  --container-shell: 69.375rem;
 }
 
 @layer base {
@@ -11,6 +59,8 @@
   }
 
   body {
+    background-color: var(--color-page);
+    color: var(--color-ink);
     font-family: var(--font-sans);
   }
 
