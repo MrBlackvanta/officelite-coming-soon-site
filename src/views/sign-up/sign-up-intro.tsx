@@ -1,10 +1,7 @@
-import { Countdown } from "@/components/ui";
-import { formatLaunchDate, nextLaunchDate } from "@/lib";
+import { Countdown, LaunchDate } from "@/components/ui";
+import { buildTime } from "@/lib";
 
 export function SignUpIntro() {
-  const renderedAt = new Date();
-  const launch = nextLaunchDate(renderedAt);
-
   return (
     <div className="mt-20 text-center md:mt-26 xl:mt-38.5 xl:w-135 xl:text-left">
       <h1 className="text-h1 text-ink xl:text-display font-bold">
@@ -16,11 +13,10 @@ export function SignUpIntro() {
         development and getting ready for official launch soon.
       </p>
       <h2 className="text-eyebrow text-ink mt-16 md:mt-10">
-        Coming {formatLaunchDate(launch)}
+        Coming <LaunchDate renderedAt={buildTime} />
       </h2>
       <Countdown
-        target={launch.getTime()}
-        renderedAt={renderedAt.getTime()}
+        renderedAt={buildTime}
         tone="light"
         className="mt-4.5 md:mt-2 xl:justify-start"
       />

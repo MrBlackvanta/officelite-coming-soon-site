@@ -9,13 +9,20 @@ const perMinute = 60;
 const perHour = 60 * perMinute;
 const perDay = 24 * perHour;
 
-function launchOn(year: number) {
-  return new Date(`${year}-11-04T00:00:00Z`);
+const launchMonths = [1, 4, 7, 10];
+const launchDayOfMonth = 4;
+
+function launchOn(year: number, month: number) {
+  return Date.UTC(year, month, launchDayOfMonth);
 }
 
 export function nextLaunchDate(from: Date) {
-  const thisYear = launchOn(from.getUTCFullYear());
-  return thisYear > from ? thisYear : launchOn(from.getUTCFullYear() + 1);
+  const year = from.getUTCFullYear();
+  const ahead = launchMonths
+    .map((month) => launchOn(year, month))
+    .find((candidate) => candidate > from.getTime());
+
+  return new Date(ahead ?? launchOn(year + 1, launchMonths[0]));
 }
 
 export function formatLaunchDate(date: Date) {

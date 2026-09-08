@@ -10,7 +10,7 @@
   --color-surface: #ffffff;
   --color-night: #25293a;
   --color-ink: #333950;
-  --color-muted: #6a718a;
+  --color-muted: #646b84;
   --color-hairline: #898fa5;
   --color-danger: #e01515;
 
@@ -92,6 +92,55 @@
 
 @utility v-focus-ring {
   @apply focus-visible:outline-2 focus-visible:outline-offset-4;
+}
+
+@utility v-field-focus {
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      border-color 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  &:focus-visible {
+    @apply border-brand outline-2 outline-transparent;
+
+    box-shadow: 0 1px 0 0 var(--color-brand);
+  }
+}
+
+@utility v-field-error {
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      opacity 180ms ease-out,
+      translate 180ms ease-out,
+      visibility 180ms;
+  }
+
+  &[data-resolved] {
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 -0.375rem;
+  }
+}
+
+@utility v-popover {
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      opacity 150ms ease-out,
+      translate 150ms ease-out,
+      display 150ms allow-discrete;
+
+    @starting-style {
+      opacity: 0;
+      translate: 0 -0.5rem;
+    }
+  }
+
+  &[data-closed] {
+    display: none;
+    opacity: 0;
+    translate: 0 -0.5rem;
+  }
 }
 
 @layer base {

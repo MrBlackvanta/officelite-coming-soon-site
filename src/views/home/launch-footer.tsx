@@ -1,11 +1,8 @@
 import { Signature } from "@/components/layout";
-import { Countdown, CtaLink } from "@/components/ui";
-import { formatLaunchDate, nextLaunchDate } from "@/lib";
+import { Countdown, CtaLink, LaunchDate } from "@/components/ui";
+import { buildTime } from "@/lib";
 
 export function LaunchFooter() {
-  const renderedAt = new Date();
-  const launch = nextLaunchDate(renderedAt);
-
   return (
     <footer className="relative mt-25 lg:mt-20.5">
       <div
@@ -17,11 +14,10 @@ export function LaunchFooter() {
       <div className="v-shell relative pb-25 lg:flex lg:items-center lg:justify-between lg:pb-22.75">
         <div className="text-center lg:text-left">
           <h2 className="text-eyebrow text-surface">
-            Coming {formatLaunchDate(launch)}
+            Coming <LaunchDate renderedAt={buildTime} />
           </h2>
           <Countdown
-            target={launch.getTime()}
-            renderedAt={renderedAt.getTime()}
+            renderedAt={buildTime}
             tone="dark"
             className="mt-4.5 md:mt-2 lg:mt-0 lg:justify-start"
           />

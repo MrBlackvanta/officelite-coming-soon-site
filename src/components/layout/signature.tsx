@@ -17,7 +17,7 @@ export function Signature({ className }: SignatureProps) {
         href="https://www.linkedin.com/in/abdelrhman-vanta/"
         target="_blank"
         rel="noopener noreferrer"
-        className="v-focus-ring underline underline-offset-2"
+        className="v-focus-ring underline underline-offset-2 outline-current"
       >
         Abdelrhman Abdelaal
       </a>

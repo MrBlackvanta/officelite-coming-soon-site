@@ -15,15 +15,18 @@ const labelId = "pack-label";
 const triggerId = "pack-trigger";
 const listboxId = "pack-listbox";
 
+const noActiveOption = -1;
+
 const optionId = (id: string) => `pack-option-${id}`;
 
 export function PackSelect({ packs, value, onChange }: PackSelectProps) {
   const [open, setOpen] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(noActiveOption);
   const rootRef = useRef<HTMLDivElement>(null);
 
   const selectedIndex = packs.findIndex((pack) => pack.id === value);
   const selected = packs[selectedIndex];
+  const lastIndex = packs.length - 1;
 
   useEffect(() => {
     if (!open) return;
@@ -42,16 +45,19 @@ export function PackSelect({ packs, value, onChange }: PackSelectProps) {
     setOpen(true);
   };
 
-  const choose = (index: number) => {
-    onChange(packs[index].id);
+  const close = () => {
+    setActiveIndex(noActiveOption);
     setOpen(false);
+  };
+
+  const choose = (index: number) => {
+    if (index !== noActiveOption) onChange(packs[index].id);
+    close();
   };
 
   const step = (offset: number) => {
     if (!open) return openAt(selectedIndex);
-    setActiveIndex(
-      Math.min(Math.max(activeIndex + offset, 0), packs.length - 1),
-    );
+    setActiveIndex(Math.min(Math.max(activeIndex + offset, 0), lastIndex));
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
@@ -67,15 +73,13 @@ export function PackSelect({ packs, value, onChange }: PackSelectProps) {
         return open ? setActiveIndex(0) : openAt(0);
       case "End":
         event.preventDefault();
-        return open
-          ? setActiveIndex(packs.length - 1)
-          : openAt(packs.length - 1);
+        return open ? setActiveIndex(lastIndex) : openAt(lastIndex);
       case "Enter":
       case " ":
         event.preventDefault();
         return open ? choose(activeIndex) : openAt(selectedIndex);
       case "Escape":
-        return setOpen(false);
+        return close();
       case "Tab":
         if (open) choose(activeIndex);
         return;
@@ -97,11 +101,13 @@ export function PackSelect({ packs, value, onChange }: PackSelectProps) {
           aria-expanded={open}
           aria-labelledby={`${labelId} ${triggerId}`}
           aria-activedescendant={
-            open ? optionId(packs[activeIndex].id) : undefined
+            open && activeIndex !== noActiveOption
+              ? optionId(packs[activeIndex].id)
+              : undefined
           }
-          onClick={() => (open ? setOpen(false) : openAt(selectedIndex))}
+          onClick={() => (open ? close() : openAt(noActiveOption))}
           onKeyDown={handleKeyDown}
-          className="v-focus-ring outline-brand border-hairline flex w-full items-center justify-between border-b ps-4 pe-6 pb-4"
+          className="v-field-focus border-hairline flex w-full items-center justify-between border-b ps-4 pe-6 pb-4"
         >
           <PackLabel pack={selected} />
           <ChevronDownIcon
@@ -111,32 +117,39 @@ export function PackSelect({ packs, value, onChange }: PackSelectProps) {
             )}
           />
         </button>
-        {open && (
-          <ul
-            role="listbox"
-            id={listboxId}
-            aria-labelledby={labelId}
-            className="bg-surface border-hairline/30 divide-hairline/30 shadow-panel absolute inset-x-0 top-full z-10 -mx-1 mt-2 divide-y rounded-lg border px-6 py-2 md:px-8"
-          >
-            {packs.map((pack, index) => (
-              <li
-                key={pack.id}
-                id={optionId(pack.id)}
-                role="option"
-                aria-selected={pack.id === value}
-                onClick={() => choose(index)}
-                onPointerMove={() => setActiveIndex(index)}
+        <ul
+          role="listbox"
+          id={listboxId}
+          aria-labelledby={labelId}
+          data-closed={open ? undefined : ""}
+          onPointerLeave={() => setActiveIndex(noActiveOption)}
+          className="v-popover bg-surface border-hairline/30 shadow-panel absolute inset-x-0 top-full z-10 -mx-1 mt-2 rounded-lg border py-2"
+        >
+          {packs.map((pack, index) => (
+            <li
+              key={pack.id}
+              id={optionId(pack.id)}
+              role="option"
+              aria-selected={pack.id === value}
+              onClick={() => choose(index)}
+              onPointerMove={() => setActiveIndex(index)}
+              className={cn(
+                "cursor-pointer px-6 motion-safe:transition-colors md:px-8",
+                index === activeIndex && "bg-tile",
+              )}
+            >
+              <div
                 className={cn(
-                  "flex cursor-pointer items-center justify-between gap-2 py-4",
-                  index === activeIndex && "bg-tile",
+                  "flex items-center justify-between gap-2 py-4",
+                  index !== lastIndex && "border-hairline/30 border-b",
                 )}
               >
                 <PackLabel pack={pack} />
                 {pack.id === value && <CheckIcon className="text-brand" />}
-              </li>
-            ))}
-          </ul>
-        )}
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

@@ -1,12 +1,12 @@
 "use client";
 
-import { cn, secondsUntil, splitRemaining, type Remaining } from "@/lib";
-import { useMemo, useSyncExternalStore } from "react";
+import { cn, splitRemaining, type Remaining } from "@/lib";
+
+import { useLaunch } from "./use-launch";
 
 type CountdownTone = "dark" | "light";
 
 type CountdownProps = {
-  target: number;
   renderedAt: number;
   tone: CountdownTone;
   className?: string;
@@ -35,46 +35,8 @@ const tones: Record<
   },
 };
 
-function createTicker(target: number) {
-  const listeners = new Set<() => void>();
-  let secondsLeft = secondsUntil(target, Date.now());
-  let timer: ReturnType<typeof setInterval> | undefined;
-
-  const tick = () => {
-    const next = secondsUntil(target, Date.now());
-    if (next === secondsLeft) return;
-    secondsLeft = next;
-    for (const listener of listeners) listener();
-  };
-
-  return {
-    subscribe(listener: () => void) {
-      listeners.add(listener);
-      timer ??= setInterval(tick, 200);
-
-      return () => {
-        listeners.delete(listener);
-        if (listeners.size > 0) return;
-        clearInterval(timer);
-        timer = undefined;
-      };
-    },
-    getSnapshot: () => secondsLeft,
-  };
-}
-
-export function Countdown({
-  target,
-  renderedAt,
-  tone,
-  className,
-}: CountdownProps) {
-  const ticker = useMemo(() => createTicker(target), [target]);
-  const secondsLeft = useSyncExternalStore(
-    ticker.subscribe,
-    ticker.getSnapshot,
-    () => secondsUntil(target, renderedAt),
-  );
+export function Countdown({ renderedAt, tone, className }: CountdownProps) {
+  const { secondsLeft } = useLaunch(renderedAt);
   const remaining = splitRemaining(secondsLeft);
   const colours = tones[tone];
 
