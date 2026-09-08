@@ -1,19 +1,15 @@
 "use client";
 
+import { type Amount, formatPrice } from "@/data";
 import { cn } from "@/lib";
 import { type CSSProperties, useEffect, useRef, useState } from "react";
 
 type CountingPriceProps = {
-  dollars: number;
-  cents: number;
+  price: Amount;
   className?: string;
 };
 
-export function CountingPrice({
-  dollars,
-  cents,
-  className,
-}: CountingPriceProps) {
+export function CountingPrice({ price, className }: CountingPriceProps) {
   const numberRef = useRef<HTMLSpanElement>(null);
   const [hasEntered, setHasEntered] = useState(false);
 
@@ -36,14 +32,17 @@ export function CountingPrice({
 
   return (
     <p className={className}>
-      <span className="sr-only">
-        ${dollars}.{String(cents).padStart(2, "0")}
-      </span>
+      <span className="sr-only">{formatPrice(price)}</span>
       <span
         ref={numberRef}
         aria-hidden="true"
         className={cn("v-count", hasEntered && "v-count-run")}
-        style={{ "--v-dollars": dollars, "--v-cents": cents } as CSSProperties}
+        style={
+          {
+            "--v-dollars": price.dollars,
+            "--v-cents": price.cents,
+          } as CSSProperties
+        }
       />
     </p>
   );

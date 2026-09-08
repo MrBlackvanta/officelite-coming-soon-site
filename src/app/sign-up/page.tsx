@@ -1,5 +1,8 @@
+import { Signature, SiteHeader } from "@/components/layout";
+import { HeaderRings } from "@/components/ui";
 import { siteName } from "@/data";
 import { pageMetadata } from "@/lib/metadata";
+import { SidePanel, SignUpForm, SignUpIntro } from "@/views/sign-up";
 import type { Metadata } from "next";
 
 const title = "Get early access";
@@ -14,5 +17,18 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default function SignUpPage() {
-  return <main />;
+  return (
+    <div className="relative min-h-dvh overflow-x-clip pb-21.75 md:pb-30.75 xl:pb-25">
+      <SidePanel />
+      <HeaderRings className="md:hidden" />
+      <SiteHeader />
+      <main className="v-shell xl:flex xl:items-start xl:justify-between">
+        <SignUpIntro />
+        <SignUpForm />
+      </main>
+      <footer>
+        <Signature className="xl:text-muted" />
+      </footer>
+    </div>
+  );
 }

@@ -12,5 +12,5 @@ export function PlanPrice({ price, className }: PlanPriceProps) {
     return <p className={className}>{price}</p>;
   }
 
-  return <CountingPrice {...price} className={className} />;
+  return <CountingPrice price={price} className={className} />;
 }

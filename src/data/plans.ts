@@ -1,4 +1,6 @@
-export type Price = { dollars: number; cents: number } | string;
+export type Amount = { dollars: number; cents: number };
+
+export type Price = Amount | string;
 
 export type Plan = {
   name: string;
@@ -7,6 +9,12 @@ export type Plan = {
   features: string[];
   featured: boolean;
 };
+
+export function formatPrice(price: Price) {
+  return typeof price === "string"
+    ? price
+    : `$${price.dollars}.${String(price.cents).padStart(2, "0")}`;
+}
 
 export const plans: Plan[] = [
   {
@@ -39,3 +47,15 @@ export const plans: Plan[] = [
     featured: false,
   },
 ];
+
+export type Pack = {
+  id: string;
+  name: string;
+  price: string;
+};
+
+export const packs: Pack[] = plans.map(({ name, price }) => ({
+  id: name.toLowerCase(),
+  name: `${name} Pack`,
+  price: formatPrice(price),
+}));

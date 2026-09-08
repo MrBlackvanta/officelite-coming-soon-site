@@ -6,7 +6,7 @@ const images = [
     url: "/opengraph-image.jpg",
     width: 1200,
     height: 630,
-    alt: "The officelite share card, headlined “Collaboration platform launching soon”.",
+    alt: "The officelite share card, headlined “Work smarter. Save time.”",
   },
 ];
 

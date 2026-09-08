@@ -22,7 +22,8 @@ export function LaunchFooter() {
           <Countdown
             target={launch.getTime()}
             renderedAt={renderedAt.getTime()}
-            className="mt-4.5 md:mt-2 lg:mt-0"
+            tone="dark"
+            className="mt-4.5 md:mt-2 lg:mt-0 lg:justify-start"
           />
         </div>
         <CtaLink
